@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">TeamManager</string>
+    <string name="login">Login</string>
+    <string name="sign_in_to_continue">sign in to continue</string>
+</resources>

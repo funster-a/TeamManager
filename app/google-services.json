@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "96596669956",
+    "project_id": "teammanager-cb865",
+    "storage_bucket": "teammanager-cb865.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:96596669956:android:e293380f2d5d8e4f49a751",
+        "android_client_info": {
+          "package_name": "com.example.teammanager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxr9lKSFc45ik2xTp-7Yi_mcsUfO3CNKg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
