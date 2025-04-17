@@ -1,4 +1,4 @@
-package com.example.teammanager;
+package com.example.teammanager.view;
 
 import android.os.Bundle;
 
@@ -8,7 +8,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.teammanager.R;
+import com.example.teammanager.controller.AuthController;
+
 public class registration extends AppCompatActivity {
+
+    private AuthController authController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,5 +25,22 @@ public class registration extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-    }
+
+
+    };
+    authController = new AuthController();
+
+    authController.registerUser(email, password, new AuthController.OnAuthCompleteListener() {
+        @Override
+        public void onSuccess() {
+            Toast.makeText(RegistrationActivity.this, "Регистрация успешна", Toast.LENGTH_SHORT).show();
+            // переход на Login или MainActivity
+        }
+
+        @Override
+        public void onFailure(String error) {
+            Toast.makeText(RegistrationActivity.this, "Ошибка: " + error, Toast.LENGTH_SHORT).show();
+        }
+    });
+
 }

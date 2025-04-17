@@ -13,13 +13,13 @@
         android:theme="@style/Theme.TeamManager"
         tools:targetApi="31">
         <activity
-            android:name=".registration"
+            android:name=".view.registration"
             android:exported="false" />
         <activity
-            android:name=".login"
+            android:name=".view.login"
             android:exported="false" />
         <activity
-            android:name=".splash"
+            android:name=".view.splash"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:exported="false" />
     </application>
 
