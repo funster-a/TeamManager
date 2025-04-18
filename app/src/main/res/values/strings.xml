@@ -2,4 +2,10 @@
     <string name="app_name">TeamManager</string>
     <string name="login">Login</string>
     <string name="sign_in_to_continue">sign in to continue</string>
+    <string-array name="task_statuses">
+        <item>К выполнению</item>
+        <item>В процессе</item>
+        <item>Выполнено</item>
+        <item>Отложено</item>
+    </string-array>
 </resources>

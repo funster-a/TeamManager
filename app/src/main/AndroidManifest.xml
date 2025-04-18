@@ -13,6 +13,12 @@
         android:theme="@style/Theme.TeamManager"
         tools:targetApi="31">
         <activity
+            android:name=".view.AddEditTaskActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.TaskListActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.registration"
             android:exported="false" />
         <activity

@@ -81,7 +81,7 @@ public class login extends AppCompatActivity {
             public void onSuccess(String name) {
                 Toast.makeText(login.this, "Вход успешен!", Toast.LENGTH_SHORT).show();
                 // TODO: Переход на следующий экран (например, экран списка задач)
-                Intent intent = new Intent(login.this, MainActivity.class);
+                Intent intent = new Intent(login.this, TaskListActivity.class);
                 startActivity(intent);
                 finish();
             }
