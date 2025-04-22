@@ -50,6 +50,9 @@ public class TaskListActivity extends AppCompatActivity {
             intent.putExtra("taskDeadline", task.getDeadline());
             intent.putExtra("taskStatus", task.getStatus());
             startActivity(intent);
+        }, task -> {
+            // Обработка долгого нажатия (удаление)
+            deleteTask(task.getTaskId());
         });
         recyclerViewTasks.setAdapter(taskAdapter);
 
@@ -80,5 +83,20 @@ public class TaskListActivity extends AppCompatActivity {
                 Toast.makeText(TaskListActivity.this, "Ошибка при загрузке задач: " + error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+
+
+    }
+
+    private void deleteTask(String taskIdToDelete) {
+        DatabaseReference taskToDeleteReference = tasksReference.child(taskIdToDelete);
+        taskToDeleteReference.removeValue()
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(TaskListActivity.this, "Задача успешно удалена!", Toast.LENGTH_SHORT).show();
+                    // Firebase автоматически обновит данные, и ValueEventListener сработает,
+                    // обновив taskList и RecyclerView.
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(TaskListActivity.this, "Ошибка при удалении задачи: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                });
     }
 }

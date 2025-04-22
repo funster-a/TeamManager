@@ -16,15 +16,21 @@ import java.util.List;
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
 
     private List<Task> taskList;
-    private OnTaskClickListener listener;
+    private OnTaskClickListener clickListener;
+    private OnTaskLongClickListener longClickListener;
 
     public interface OnTaskClickListener {
         void onTaskClick(Task task);
     }
 
-    public TaskAdapter(List<Task> taskList, OnTaskClickListener listener) {
+    public interface OnTaskLongClickListener {
+        void onTaskLongClick(Task task);
+    }
+
+    public TaskAdapter(List<Task> taskList, OnTaskClickListener clickListener, OnTaskLongClickListener longClickListener) {
         this.taskList = taskList;
-        this.listener = listener;
+        this.clickListener = clickListener;
+        this.longClickListener = longClickListener;
     }
 
     public void setTasks(List<Task> newTaskList) {
@@ -37,7 +43,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_task, parent, false);
-        return new TaskViewHolder(itemView, listener);
+        return new TaskViewHolder(itemView, clickListener, longClickListener); // Передаем longClickListener в ViewHolder
     }
 
     @Override
@@ -57,7 +63,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         private TextView textViewDeadline;
         private TextView textViewStatus;
 
-        public TaskViewHolder(@NonNull View itemView, final OnTaskClickListener listener) {
+        public TaskViewHolder(@NonNull View itemView, final OnTaskClickListener clickListener, final OnTaskLongClickListener longClickListener) {
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.textViewTaskTitle);
             textViewDescription = itemView.findViewById(R.id.textViewTaskDescription);
@@ -66,8 +72,20 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
             itemView.setOnClickListener(v -> {
                 int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION && listener != null) {
-                    listener.onTaskClick(((TaskAdapter) ((RecyclerView) itemView.getParent()).getAdapter()).taskList.get(position));
+                if (position != RecyclerView.NO_POSITION && clickListener != null) {
+                    clickListener.onTaskClick(((TaskAdapter) ((RecyclerView) itemView.getParent()).getAdapter()).taskList.get(position));
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && longClickListener != null) {
+                        longClickListener.onTaskLongClick(((TaskAdapter) ((RecyclerView) itemView.getParent()).getAdapter()).taskList.get(position));
+                        return true; // Indicate that the long click was handled
+                    }
+                    return false;
                 }
             });
         }
