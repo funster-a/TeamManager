@@ -2,6 +2,8 @@
     <string name="app_name">TeamManager</string>
     <string name="login">Login</string>
     <string name="sign_in_to_continue">sign in to continue</string>
+    <string name="hint_enter_message">Введите текст сообщения</string>
+    <string name="default_web_client_id">96596669956-mpktg2q55o3c3h0lpb5b0m892bq8f5n8.apps.googleusercontent.com</string>
     <string-array name="task_statuses">
         <item>К выполнению</item>
         <item>В процессе</item>

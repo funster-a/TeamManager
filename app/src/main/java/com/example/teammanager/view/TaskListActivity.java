@@ -2,7 +2,14 @@ package com.example.teammanager.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar; // Импортируйте правильный класс Toolbar
+
+import android.text.Editable;
+import android.text.TextWatcher;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,16 +34,40 @@ public class TaskListActivity extends AppCompatActivity {
     private RecyclerView recyclerViewTasks;
     private TaskAdapter taskAdapter;
     private List<Task> taskList;
+    private List<Task> originalTaskList; // Копия исходного списка
+
     private FloatingActionButton fabAddTask;
 
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference tasksReference;
+    private EditText editTextSearchTask;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        editTextSearchTask = findViewById(R.id.editTextSearchTask);
+        editTextSearchTask.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Не используется
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filterTasks(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Не используется
+            }
+        });
         recyclerViewTasks = findViewById(R.id.recyclerViewTasks);
         recyclerViewTasks.setLayoutManager(new LinearLayoutManager(this));
 
@@ -45,7 +76,7 @@ public class TaskListActivity extends AppCompatActivity {
         taskAdapter = new TaskAdapter(taskList, task -> {
             Intent intent = new Intent(TaskListActivity.this, AddEditTaskActivity.class);
             intent.putExtra("taskId", task.getTaskId());
-            intent.putExtra("taskTitle", task.getTitle());
+            intent.putExtra("task0Title", task.getTitle());
             intent.putExtra("taskDescription", task.getDescription());
             intent.putExtra("taskDeadline", task.getDeadline());
             intent.putExtra("taskStatus", task.getStatus());
@@ -65,6 +96,16 @@ public class TaskListActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        ImageView chatIconImageView = findViewById(R.id.imageViewChat);
+        chatIconImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TaskListActivity.this, ChatActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
         tasksReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -75,6 +116,7 @@ public class TaskListActivity extends AppCompatActivity {
                         taskList.add(task);
                     }
                 }
+                originalTaskList = new ArrayList<>(taskList);
                 taskAdapter.setTasks(taskList);
             }
 
@@ -85,6 +127,31 @@ public class TaskListActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void loadTasks() {
+        // ...
+    }
+
+    private void filterTasks(String query) {
+        List<Task> filteredList = new ArrayList<>();
+        query = query.toLowerCase().trim(); // Приводим запрос к нижнему регистру и убираем пробелы
+
+        if (query.isEmpty()) {
+            // Если поисковый запрос пуст, показываем весь исходный список
+            filteredList.addAll(originalTaskList); // Используем originalTaskList
+        } else {
+            for (Task task : originalTaskList) { // Итерируемся по originalTaskList
+                if (task.getTitle().toLowerCase().contains(query)) {
+                    filteredList.add(task);
+                } else if (task.getDescription() != null && task.getDescription().toLowerCase().contains(query)) {
+                    filteredList.add(task);
+                }
+            }
+        }
+
+        // Обновляем RecyclerView отфильтрованным списком
+        taskAdapter.updateTaskList(filteredList);
     }
 
     private void deleteTask(String taskIdToDelete) {

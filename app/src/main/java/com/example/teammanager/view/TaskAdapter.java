@@ -57,6 +57,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         return taskList.size();
     }
 
+    public void updateTaskList(List<Task> newTaskList) {
+        taskList.clear();
+        taskList.addAll(newTaskList);
+        notifyDataSetChanged();
+    }
+
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
         private TextView textViewTitle;
         private TextView textViewDescription;
@@ -89,6 +95,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 }
             });
         }
+
 
         public void bind(Task task) {
             textViewTitle.setText(task.getTitle());
