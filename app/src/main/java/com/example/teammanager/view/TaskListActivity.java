@@ -51,6 +51,20 @@ public class TaskListActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        String userRole = getIntent().getStringExtra("userRole");
+        final boolean isAdmin = "admin".equals(userRole);
+
+        FloatingActionButton fabAddTask = findViewById(R.id.fabAddTask);
+        if (isAdmin) {
+            fabAddTask.setVisibility(View.VISIBLE);
+            fabAddTask.setOnClickListener(v -> {
+                Intent intent = new Intent(TaskListActivity.this, AddEditTaskActivity.class);
+                startActivity(intent);
+            });
+        } else {
+            fabAddTask.setVisibility(View.GONE);
+        }
+
         editTextSearchTask = findViewById(R.id.editTextSearchTask);
         editTextSearchTask.addTextChangedListener(new TextWatcher() {
             @Override
@@ -74,17 +88,22 @@ public class TaskListActivity extends AppCompatActivity {
         taskList = new ArrayList<>();
         // Инициализация адаптера с слушателем кликов
         taskAdapter = new TaskAdapter(taskList, task -> {
-            Intent intent = new Intent(TaskListActivity.this, AddEditTaskActivity.class);
-            intent.putExtra("taskId", task.getTaskId());
-            intent.putExtra("task0Title", task.getTitle());
-            intent.putExtra("taskDescription", task.getDescription());
-            intent.putExtra("taskDeadline", task.getDeadline());
-            intent.putExtra("taskStatus", task.getStatus());
-            startActivity(intent);
+            // Обработка клика (редактирование)
+            if (isAdmin) {
+                Intent intent = new Intent(TaskListActivity.this, AddEditTaskActivity.class);
+                intent.putExtra("taskId", task.getTaskId());
+                intent.putExtra("task0Title", task.getTitle());
+                intent.putExtra("taskDescription", task.getDescription());
+                intent.putExtra("taskDeadline", task.getDeadline());
+                intent.putExtra("taskStatus", task.getStatus());
+                startActivity(intent);
+            }
         }, task -> {
             // Обработка долгого нажатия (удаление)
-            deleteTask(task.getTaskId());
-        });
+            if (isAdmin) {
+                deleteTask(task.getTaskId());
+            }
+        }, isAdmin);
         recyclerViewTasks.setAdapter(taskAdapter);
 
         firebaseDatabase = FirebaseDatabase.getInstance();

@@ -11,44 +11,59 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/textViewTaskTitle"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            tools:text="Название задачи" />
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textViewTaskDeadline"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textSize="14sp"
-            tools:text="Срок: 2025-04-25" />
+            <TextView
+                android:id="@+id/textViewTaskTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                tools:text="Название задачи" />
 
-        <TextView
-            android:id="@+id/textViewTaskDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textSize="14sp"
-            tools:text="Описание задачи" />
+            <TextView
+                android:id="@+id/textViewTaskDeadline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textSize="14sp"
+                tools:text="Срок: 2025-04-25" />
 
-        <TextView
-            android:id="@+id/textViewTaskStatus"
+            <TextView
+                android:id="@+id/textViewTaskDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textSize="14sp"
+                tools:text="Описание задачи" />
+
+            <TextView
+                android:id="@+id/textViewTaskStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="4dp"
+                android:background="@color/colorPrimaryLight"
+                android:textColor="@android:color/black"
+                android:textSize="12sp"
+                tools:text="В процессе" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/checkBoxCompleted"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:padding="4dp"
-            android:background="@color/colorPrimaryLight"
-            android:textColor="@android:color/black"
-            android:textSize="12sp"
-
-            tools:text="В процессе" />
+            android:layout_marginStart="16dp"
+            android:text="Выполнено" />
 
     </LinearLayout>
 
