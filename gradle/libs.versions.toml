@@ -16,6 +16,7 @@ credentialsPlayServicesAuth = "1.5.0"
 googleid = "1.1.1"
 firebaseStorage = "21.0.1"
 circleimageview = "3.1.0"
+firebaseFirestore = "25.1.4"
 
 
 [libraries]
@@ -37,6 +38,7 @@ firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version =
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 
 
 [plugins]

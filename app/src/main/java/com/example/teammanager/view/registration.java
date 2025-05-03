@@ -87,8 +87,8 @@ public class registration extends AppCompatActivity {
 
             authController.registerUser(name, email, password, new AuthController.OnAuthCompleteListener() {
                 @Override
-                public void onSuccess(String registeredName) { // Обновленный onSuccess
-                    Toast.makeText(registration.this, "Регистрация успешна, " + registeredName + "!", Toast.LENGTH_SHORT).show();
+                public void onSuccess(String registeredName, String role) { // Обновленный onSuccess
+                    Toast.makeText(registration.this, "Регистрация успешна, " + registeredName + "! Роль: " + role, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(registration.this, MainActivity.class); // Или MainActivity.class
                     startActivity(intent);
                     finish();

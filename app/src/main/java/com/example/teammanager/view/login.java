@@ -109,11 +109,22 @@ public class login extends AppCompatActivity {
 
         authController.loginUser(email, password, new AuthController.OnAuthCompleteListener() {
             @Override
-            public void onSuccess(String name) {
-                Toast.makeText(login.this, "Вход успешен!", Toast.LENGTH_SHORT).show();
-                // TODO: Переход на следующий экран (например, экран списка задач)
-                Intent intent = new Intent(login.this, TaskListActivity.class);
-                startActivity(intent);
+            public void onSuccess(String name, String role) {
+                Log.d("LoginActivity", "Успешный вход. Имя: " + name + ", Роль: " + role);
+                // Теперь у вас есть роль пользователя
+                Toast.makeText(login.this, "Вход успешен, " + name + "! Роль: " + role, Toast.LENGTH_SHORT).show();
+
+                // Здесь вам нужно определить, куда перенаправлять пользователя в зависимости от его роли
+                if (role != null && role.equals("admin")) {
+                    // Перейти на панель администратора
+                    Intent intent = new Intent(login.this, AdminPanelActivity.class); // Замените на вашу AdminPanelActivity
+                    startActivity(intent);
+                } else {
+                    // Перейти на обычный экран приложения (например, TaskListActivity)
+                    Intent intent = new Intent(login.this, TaskListActivity.class); // Замените на вашу TaskListActivity
+                    intent.putExtra("userRole", role);
+                    startActivity(intent);
+                }
                 finish();
             }
 
