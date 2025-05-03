@@ -40,6 +40,8 @@ firebase-database = { group = "com.google.firebase", name = "firebase-database",
 firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 
+glide = { group = "com.github.bumptech.glide", name = "glide", version = "4.16.0" } # Или используйте последнюю версию
+glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version = "4.16.0" } # Если требуется annotationProcessor
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
