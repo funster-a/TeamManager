@@ -49,5 +49,8 @@ dependencies {
     androidTestImplementation libs.espresso.core
     implementation libs.sdp
     implementation libs.circleimageview
+    implementation libs.glide
+    annotationProcessor libs.glide.compiler // Если вы используете annotationProcessor
+
 
 }
